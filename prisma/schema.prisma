@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+model Post {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    author      String
+    postType    String
+    body        String
+    dateCreated DateTime
+    url         String
+}
+
+model DiscordMessage {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  content     String
+  author      String
+  postType    String
+  dateCreated DateTime
+  serverName  String
+  channelName String
+}
+
+model userAlerts {
+    id              String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId          String   @unique
+    alerts          String[]
+    matchedListings String[]
+}
